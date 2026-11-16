@@ -68,7 +68,7 @@ fun DeleteTracksDialog(onRun: (command: String, params: JsonObject) -> Unit, onD
             }
             Text("Target", style = MaterialTheme.typography.labelLarge)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                FilterChip(f1 == "\"empty\".to_string()", { f1 = "\"empty\".to_string()" }, label = { Text("All Empty Tracks") })
+                FilterChip(f1 == "empty", { f1 = "empty" }, label = { Text("All Empty Tracks") })
             }
         }
     }
