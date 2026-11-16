@@ -109,7 +109,7 @@ fun toolCommand(id: String): Pair<String, JsonObject>? = null
 fun toolInHand(state: JsonElement?): String? = null
 
 private fun exec(run: (String, JsonObject) -> Unit, command: String, params: JsonObject = JsonObject(emptyMap())) =
-    run("engine.execute", buildJsonObject { put("command", command); put("params", params) })
+    run(command, params)
 
 /** The transport: where the playhead is, and the cut and delete that act at it. */
 @Composable

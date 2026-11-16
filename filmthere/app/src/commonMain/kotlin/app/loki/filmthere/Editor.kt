@@ -76,14 +76,14 @@ fun Editor(native: SurfaceEngine, revision: Int, modifier: Modifier) {
             lanes, total = seconds(seq.long("duration")).coerceAtLeast(10.0), playhead = seconds(seq.long("playhead")),
             modifier = Modifier.fillMaxWidth().weight(0.45f),
             marks = seq.obj()?.get("markers").arr().mapNotNull { m -> m.long("start")?.let { TimelineMark(seconds(it), m.str("name") ?: "") } },
-            onSeek = { t -> ws?.run?.invoke("engine.execute", buildJsonObject { put("command", "playhead.set"); put("params", buildJsonObject { put("seconds", t) }) }) {} },
+            onSeek = { t -> ws?.run?.invoke("playhead.set", buildJsonObject { put("seconds", t) }) {} },
             onTap = { _, clip, at ->
                 val w = ws ?: return@LaneTimeline
                 if (clip == null) return@LaneTimeline
                 if (w.tool == "Razor") {
-                    w.run("engine.execute", buildJsonObject { put("command", "timeline.razor"); put("params", buildJsonObject { put("time", (at * TICKS_PER_SECOND).toLong()); put("clip", clip.id) }) }) {}
+                    w.run("timeline.razor", buildJsonObject { put("time", (at * TICKS_PER_SECOND).toLong()); put("clip", clip.id) }) {}
                 } else {
-                    w.run("engine.execute", buildJsonObject { put("command", "timeline.select"); put("params", buildJsonObject { put("clips", buildJsonArray { add(JsonPrimitive(clip.id)) }) }) }) {}
+                    w.run("timeline.select", buildJsonObject { put("clips", buildJsonArray { add(JsonPrimitive(clip.id)) }) }) {}
                 }
             },
         )
